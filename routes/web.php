@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TokenOneTimeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('token', [TokenOneTimeController::class, "index"])->name('token');
+
+Route::group(['middleware' => 'one.time.token'], function() {
+    Route::get('test', [TokenOneTimeController::class, 'test'])->name('test');
 });
